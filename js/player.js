@@ -1,7 +1,4 @@
-let canvas = document.getElementById('canvas'),
-    ctx = canvas.getContext('2d');
-const HEIGHT = canvas.height;
-const WIDTH = canvas.width;
+
 function draw() {
     var img = new Image();
     img.onload = function () {
@@ -19,4 +16,3 @@ function draw() {
     }
     img.src = '../images/pic.png';
 }
-draw();
