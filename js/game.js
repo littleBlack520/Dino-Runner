@@ -44,6 +44,8 @@ class Game {
   buildGame() {
     this.loadAssets().then(sprite=>{
         new Player(this.context,0,0,sprite);
+        new Enemy(this.context,100,100,sprite);
+        new Floor(this.context,0,100,sprite);
     });
   }
   /**

@@ -1,7 +1,7 @@
 /**
  * 玩家类
  */
-class Player {
+class Floor {
   /**
    * 构造函数
    * @param {绘制对象} context 
@@ -16,26 +16,23 @@ class Player {
     this.sprite = sprite;
     //不同状态的位置点
     this.spritePos = {
-      body: { x: 76, y: 6 },
-      run: [{ x: 1854, y: 2 }, { x: 1942, y: 2 }],
-      die: { x: 2030, y: 2 }
+      x:0,
+      y:104,
+      w:2400,
+      h:18
     };
-    this.width = 88; //宽度
-    this.height = 95; //高度
     this.scale = 0.5; //源图像的缩放比例
     this.speed = 200; //速度
-    this.create(this.spritePos.body.x, this.spritePos.body.y);
-    
+    this.create(this.spritePos.x, this.spritePos.y,this.spritePos.w,this.spritePos.h);
+    this.run();
   }
   /**
    * 创建
    * @param {x位置点} sx 
    * @param {y位置点} sy 
    */
-  create(sx, sy) {
+  create(sx, sy,sw,sh) {
     let source = this.sprite,
-      sw = this.width,
-      sh = this.height,
       x = this.x,
       y = this.y,
       w = sw * this.scale,
@@ -47,15 +44,18 @@ class Player {
    * 跑
    */
   run() {
-    let index = 0;
     let func = () => {
       setTimeout(() => {
-        let pos =  this.spritePos.run[index],
+        let pos =  this.spritePos,
             sx = pos.x,
-            sy = pos.y;
-        this.create(sx,sy);
-        index++;
-        index =  index>=this.spritePos.run.length?0:index;
+            sy = pos.y,
+            sw = pos.w,
+            sh = pos.h;
+        this.x-=50;
+        if(this.x+sw*this.scale<=600){
+           this.x = 0;
+        }
+        this.create(sx,sy,sw,sh);
         func();
       }, this.speed);
     };
