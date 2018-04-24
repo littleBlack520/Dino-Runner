@@ -1,3 +1,4 @@
+const IMAGES_PATH = "../images/sprite.png";
 class Game {
   constructor(id) {
     let canvas = document.getElementById(id);
@@ -9,11 +10,10 @@ class Game {
    * 加载资源
    */
   loadAssets() {
-    const PATH = "../images/pic.png";
-    let sprite  = new Image();
-    sprite.src = PATH;
-    return new Promise((resolve, reject)=>{
-      sprite.onload = ()=> {
+    let sprite = new Image();
+    sprite.src = IMAGES_PATH;
+    return new Promise((resolve, reject) => {
+      sprite.onload = () => {
         resolve(sprite);
       };
     });
@@ -42,16 +42,19 @@ class Game {
    * 构建游戏
    */
   buildGame() {
-    this.loadAssets().then(sprite=>{
-        new Player(this.context,0,0,sprite);
-        new Enemy(this.context,100,100,sprite);
-        new Floor(this.context,0,100,sprite);
+    this.loadAssets().then(sprite => {
+      this.player = new Player(this.context, sprite, 0, 0, 100, 100,SPRITE_DATA.player);
+      this.updateGame();
     });
   }
   /**
    * 更新游戏
    */
-  updateGame() {}
+  updateGame(timestamp) {
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.player.run(16);
+    window.requestAnimationFrame(this.updateGame.bind(this));
+  }
   /**
    * 结束游戏
    */

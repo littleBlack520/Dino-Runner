@@ -1,9 +1,9 @@
 class Base {
-  constructor(context, sprite, x, y, w, h, scale) {
+  constructor(context, sprite, x, y, w, h) {
     this.x = x;
     this.y = y;
-    this.w = h;
-    this.w = h;
+    this.w = w;
+    this.h = h;
     this.sprite = sprite;
     this.context = context;
   }
@@ -20,17 +20,23 @@ class Base {
       this.h
     );
   }
-  
 }
-class Test extends Base {
-  constructor(context, sprite, x, y, w, h, scale) {
-    super(context, sprite, x, y, w, h, scale);
+class Player extends Base {
+  constructor(context, sprite, x, y, w, h, data) {
+    super(context, sprite, x, y, w, h);
+    this.data = data;
+    this.index = 0;
+    this.speed =  2;
   }
-  start(data) {
-    super.draw(data);
+  start() {
+    super.draw();
   }
-  run(data) {
-    super.draw(data);
+  run(timesamp) {
+    this.draw(this.data.run[this.index]);
+    this.index++;
+    if (this.index >= this.data.run.length) {
+      this.index = 0;
+    }
   }
   die(data) {
     super.draw(data);
