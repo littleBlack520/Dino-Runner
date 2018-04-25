@@ -13,7 +13,7 @@ const SPRITE_DATA = {
   ],
   cloud: { x: 212, y: 0, w: 84, h: 27 },
   again: { x: 296, y: 0, w: 72, h: 64 },
-  floor: { x: 0, y: 100, w: 2400, h: 24 },
+  floor: [{ x: 0, y: 100, w: 1200, h: 24 }, { x: 0, y: 124, w: 1200, h: 24 }],
   player: {
     start: { x: 992, y: 0, w: 88, h: 90 },
     run: [{ x: 1256, y: 0, w: 88, h: 94 }, { x: 1344, y: 0, w: 88, h: 94 }],

@@ -33,6 +33,10 @@ class Base {
     }
     this._ant_index = this._ant_index >= arr.length ? 0 : this._ant_index;
   }
+  move(x,data){
+     this.x = x;
+     this.draw(data);
+  }
 }
 class Player extends Base {
   constructor(context, sprite, x, y, w, h, data) {
@@ -50,12 +54,22 @@ class Player extends Base {
   }
 }
 class Floor extends Base{
-  constructor(context, sprite, x, y, w, h, data) {
-    super(context, sprite, x, y, w, h);
+  constructor(game, sprite, x, y, w, h, data) {
+    super(game.context, sprite, x, y, w, h);
     this.data = data;
+    this.index = 0;
+    this.x = x;
+    this.game = game;
   }
   draw(){
-    super.draw(this.data);
+    super.draw(this.data[0]);
+  }
+  move(){
+    this.x-=10;
+    if(this.x){
+      
+    }
+    super.move(this.x,this.data[0]);
   }
   
 }
