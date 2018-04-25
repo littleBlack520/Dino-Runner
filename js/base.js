@@ -6,6 +6,8 @@ class Base {
     this.h = h;
     this.sprite = sprite;
     this.context = context;
+    this._ant_index = 0;
+    this._ant_last_time = Date.now();
   }
   draw(data) {
     this.context.drawImage(
@@ -20,25 +22,40 @@ class Base {
       this.h
     );
   }
+  drawAnimation(arr, fps = 10) {
+    let now = Date.now();
+    let delta = now - this._ant_last_time;
+    let interval = 1000 / fps;
+    this.draw(arr[this._ant_index]);
+    if (delta > interval) {
+      this._ant_last_time = now - delta % interval;
+      this._ant_index++;
+    }
+    this._ant_index = this._ant_index >= arr.length ? 0 : this._ant_index;
+  }
 }
 class Player extends Base {
   constructor(context, sprite, x, y, w, h, data) {
     super(context, sprite, x, y, w, h);
     this.data = data;
-    this.index = 0;
-    this.speed =  2;
   }
   start() {
-    super.draw();
+    super.draw(this.data.start);
   }
   run(timesamp) {
-    this.draw(this.data.run[this.index]);
-    this.index++;
-    if (this.index >= this.data.run.length) {
-      this.index = 0;
-    }
+    super.drawAnimation(this.data.run);
   }
   die(data) {
-    super.draw(data);
+    super.draw(this.data.die);
   }
+}
+class Floor extends Base{
+  constructor(context, sprite, x, y, w, h, data) {
+    super(context, sprite, x, y, w, h);
+    this.data = data;
+  }
+  draw(){
+    super.draw(this.data);
+  }
+  
 }

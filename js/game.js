@@ -43,7 +43,8 @@ class Game {
    */
   buildGame() {
     this.loadAssets().then(sprite => {
-      this.player = new Player(this.context, sprite, 0, 0, 100, 100,SPRITE_DATA.player);
+      this.player = new Player(this.context, sprite, 0, 0, 50, 50,SPRITE_DATA.player);
+      this.floor = new Floor(this.context, sprite, 0, 100, SPRITE_DATA.floor.w, SPRITE_DATA.floor.h,SPRITE_DATA.floor);
       this.updateGame();
     });
   }
@@ -52,7 +53,8 @@ class Game {
    */
   updateGame(timestamp) {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.player.run(16);
+　　this.player.run();
+    this.floor.draw(); 
     window.requestAnimationFrame(this.updateGame.bind(this));
   }
   /**
