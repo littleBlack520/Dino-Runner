@@ -49,7 +49,7 @@ class Game {
         this.context,
         sprite,
         0,
-        0,
+        70,
         50,
         50,
         SPRITE_DATA.player
@@ -66,6 +66,11 @@ class Game {
           SPRITE_DATA.floor[1]
         )
       ];
+      this.enemys = [
+        new Enemy(this.context, sprite, 0, 70, 34, 70, SPRITE_DATA.enemy.tree[0]),
+        new Enemy(this.context, sprite, 1000, 70, 34, 70, SPRITE_DATA.enemy.tree[1]),
+        new Enemy(this.context, sprite, 2000, 70, 34, 70, SPRITE_DATA.enemy.tree[2])
+      ]
       this.updateGame();
     });
   }
@@ -75,12 +80,12 @@ class Game {
   updateGame(timestamp) {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.player.run();
-    this.floors.forEach((item,index)=>{
-      if (!this.floors[index].move()) {
-        this.floors.push(this.floors.shift());
-      }
+    this.floors.forEach((item, index) => {
+      this.floors[index].move();
     });
-
+    this.enemys.forEach((item, index) => {
+      this.enemys[index].move(this.player);
+    });
     window.requestAnimationFrame(this.updateGame.bind(this));
   }
   /**

@@ -37,6 +37,14 @@ class Base {
     this.x = x;
     this.draw(data);
   }
+  collision(obj) {
+    return !(
+      this.x + this.w < obj.x ||
+      obj.x + obj.w < this.x ||
+      this.y + this.h < obj.y ||
+      obj.y + obj.h < this.y
+    );
+  }
 }
 class Player extends Base {
   constructor(context, sprite, x, y, w, h, data) {
@@ -60,13 +68,29 @@ class Floor extends Base {
     this.x = x;
     this.w = w;
   }
-  draw() {
-    super.draw(this.data);
-  }
   move() {
     this.x -= 10;
     if (this.x + this.w <= 0) {
+      this.x = 1200;
+    }
+    super.move(this.x, this.data);
+    return true;
+  }
+}
+class Enemy extends Base {
+  constructor(context, sprite, x, y, w, h, data) {
+    super(context, sprite, x, y, w, h);
+    this.data = data;
+    this.x = x;
+    this.w = w;
+  }
+  move(player) {
+    this.x -= 10;
+    if (this.x + this.w <= 0) {
       return false;
+    }
+    if(this.collision(player)){
+      alert('die');
     }
     super.move(this.x, this.data);
     return true;
